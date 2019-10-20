@@ -3,9 +3,9 @@
 # If source and destination are exactly equal in size then it skips to the next pair
 
 echo;echo CHECKING PERMISSIONS and RCLONE CONFIGS of $src and $dest
-if ! rclone lsd $src --drive-impersonate $(jq -r ".client_email" "$JSON_DIR/$MIN_JSON.json") &>/dev/null;then
+if ! rclone lsd $src --drive-shared-with-me --drive-service-account-file="$JSON_DIR/$MIN_JSON.json" &>/dev/null;then
   echo FAILURE: CHECK gsuite permissions and rclone config for $src in $set_file;exit;fi
-if ! rclone lsd $dest --drive-impersonate $(jq -r ".client_email" "$JSON_DIR/$MIN_JSON.json") &>/dev/null;then
+if ! rclone lsd $dest --drive-shared-with-me --drive-service-account-file="$JSON_DIR/$MIN_JSON.json" &>/dev/null;then
   echo FAILURE: CHECK gsuite permissions and rclone config for $dest in $set_file;exit;fi
 
 if [ ${PRE_CLEAN_TDS,,} = true ];then source clean_tds;fi
